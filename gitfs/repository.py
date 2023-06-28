@@ -134,7 +134,8 @@ class Repository(object):
         return path
 
     def push(self, upstream, branch, credentials):
-        """ Push changes from a branch to a remote
+
+        """Push changes from a branch to a remote.
 
         Examples::
 
@@ -146,7 +147,7 @@ class Repository(object):
 
     def fetch(self, upstream, branch_name, credentials):
         """
-        Fetch from remote and return True if we are behind or False otherwise
+        Fetch from remote and return True if we are behind or False otherwise.
         """
 
         remote = self.get_remote(upstream)
@@ -157,7 +158,7 @@ class Repository(object):
         return behind
 
     def commit(self, message, author, commiter, parents=None, ref="HEAD"):
-        """ Wrapper for create_commit. It creates a commit from a given ref
+        """Wrapper for create_commit. It creates a commit from a given ref.
         (default is HEAD)
         """
 
@@ -423,8 +424,8 @@ class Repository(object):
         return remote.get_object()
 
     def get_remote(self, name):
-        """ Retrieve a remote by name. Raise a ValueError if the remote was not
-        added to repo
+        """Retrieve a remote by name. Raise a ValueError if the remote was not
+        added to repo.
 
         Examples::
 
