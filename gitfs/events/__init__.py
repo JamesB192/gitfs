@@ -13,9 +13,10 @@
 # limitations under the License.
 
 
+import __future__
 import threading
 
-from atomiclong import AtomicLong
+from .along import AtomicLong
 
 
 syncing = threading.Event()
