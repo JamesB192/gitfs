@@ -55,6 +55,7 @@ class Args(object):
                 ("log", ("syslog", "string")),
                 ("log_level", ("warning", "string")),
                 ("cache_size", (800, "int")),
+                ("raygun_dsn", (self.get_raygun_dsn, "string")),
                 ("ignore_file", ("", "string")),
                 ("hard_ignore", ("", "string")),
                 ("min_idle_times", (10, "float")),
@@ -107,6 +108,18 @@ class Args(object):
                 "%(message)s".format(mount_point=args.mount_point)
             )
             handler.setFormatter(Formatter(fmt=logger_fmt))
+
+        if args.raygun_dsn != "":
+            from raygun4py import raygunprovider
+
+            logger = logging.getLogger("mylogger")
+            rgHandler = raygunprovider.RaygunHandler(args.raygun_dsn)
+            logger.addHandler(rgHandler)
+
+            def log_exception(exc_type, exc_value, exc_traceback):
+                logger.error("An exception occurred", exc_info = (exc_type, exc_value, exc_traceback))
+
+            sys.excepthook = log_exception
 
         handler.setLevel(args.log_level.upper())
         log.setLevel(args.log_level.upper())
@@ -169,6 +182,9 @@ class Args(object):
 
     def get_ssh_key(self, args):
         return os.getenv("HOME", "/root/") + "/.ssh/id_rsa"
+
+    def get_raygun_dsn(self, args):
+        return os.environ["RAYGUN_DSN"] if "RAYGUN_DSN" in os.environ else ""
 
     def get_ssh_user(self, args):
         url = args.remote_url
