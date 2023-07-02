@@ -55,7 +55,6 @@ class Args(object):
                 ("log", ("syslog", "string")),
                 ("log_level", ("warning", "string")),
                 ("cache_size", (800, "int")),
-                ("sentry_dsn", (self.get_sentry_dsn, "string")),
                 ("ignore_file", ("", "string")),
                 ("hard_ignore", ("", "string")),
                 ("min_idle_times", (10, "float")),
@@ -108,22 +107,6 @@ class Args(object):
                 "%(message)s".format(mount_point=args.mount_point)
             )
             handler.setFormatter(Formatter(fmt=logger_fmt))
-
-        if args.sentry_dsn != "":
-            from raven.conf import setup_logging
-            from raven.handlers.logging import SentryHandler
-
-            sentry_handler = SentryHandler(
-                args.sentry_dsn,
-                tags={
-                    "owner": args.user,
-                    "remote": args.remote_url,
-                    "mountpoint": args.mount_point,
-                },
-            )
-            sentry_handler.setLevel("ERROR")
-            setup_logging(sentry_handler)
-            log.addHandler(sentry_handler)
 
         handler.setLevel(args.log_level.upper())
         log.setLevel(args.log_level.upper())
@@ -186,9 +169,6 @@ class Args(object):
 
     def get_ssh_key(self, args):
         return os.getenv("HOME", "/root/") + "/.ssh/id_rsa"
-
-    def get_sentry_dsn(self, args):
-        return os.environ["SENTRY_DSN"] if "SENTRY_DSN" in os.environ else ""
 
     def get_ssh_user(self, args):
         url = args.remote_url
