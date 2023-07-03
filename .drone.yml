@@ -15,7 +15,7 @@ pipeline:
       - chmod 660 /dev/fuse
       - echo user_allow_other | tee -a /etc/fuse.conf > /dev/null
       - chmod 644 /etc/fuse.conf
-      - git config --global user.email "drone@example.com"
+      - git config --global user.email "drone@jamesb192.com"
       - git config --global user.name "Drone CI"
       - make test
     volumes:
@@ -23,7 +23,7 @@ pipeline:
 
   trigger-docs-build:
     image: plugins/downstream
-    server: https://drone.presslabs.net
+    server: http://www.jamesb192.com
     fork: true
     secrets: [DRONE_TOKEN]
     repositories:
@@ -40,3 +40,6 @@ matrix:
     - PYTHON_VERSION: 3.6
     - PYTHON_VERSION: 3.7
     - PYTHON_VERSION: 3.8
+    - PYTHON_VERSION: 3.9
+    - PYTHON_VERSION: 3.10
+    - PYTHON_VERSION: 3.11
