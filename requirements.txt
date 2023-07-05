@@ -3,4 +3,3 @@ fusepy==3.0.1
 pycparser==2.21
 pygit2==1.12.2
 raygun4py==4.3.2
-six==1.16.0
