@@ -208,7 +208,7 @@ class Router(object):
 
             return view, relative_path
 
-        raise ValueError("Found no view for '{}'".format(path))
+        raise ValueError("Found no view for '%s'" % path)
 
     def __getattr__(self, attr_name):
         """

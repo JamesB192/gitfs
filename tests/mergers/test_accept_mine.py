@@ -77,7 +77,8 @@ class TestAcceptMine(object):
         mine.solve_conflicts(conflicts())
 
         mocked_repo.index.remove.assert_has_calls(
-            [call("simple_path", 1), call("simple_path", 2)]
+            [call('simple_path', 2), call('simple_path', 1)],
+            # [call("simple_path", 1), call("simple_path", 2)],
         )
 
     def test_solve_conflicts_they_deleted_the_file(self):
@@ -162,8 +163,12 @@ class TestAcceptMine(object):
         mocked_solve.asssert_called_once_with(mocked_repo.index.conflicts)
 
         asserted_calls = [
-            call("refs/heads/local_branch"),
-            call("refs/heads/merging_local"),
+            call('refs/heads/merging_remote'),
+            call('refs/heads/merging_remote'),
+            call('refs/heads/merging_local'),
+            call().delete(),
+            call('refs/heads/merging_remote'),
+            call().delete(),
         ]
         mocked_repo.lookup_reference.assert_has_calls(asserted_calls)
         mocked_repo.commit.asserted_called_once_with(

@@ -111,9 +111,8 @@ class Args(object):
         if args.raygun_dsn != "":
             from raygun4py import raygunprovider
 
-            logger = logging.getLogger("mylogger")
             rgHandler = raygunprovider.RaygunHandler(args.raygun_dsn)
-            logger.addHandler(rgHandler)
+            log.addHandler(rgHandler)
 
             def log_exception(exc_type, exc_value, exc_traceback):
                 logger.error("An exception occurred", exc_info = (exc_type, exc_value, exc_traceback))

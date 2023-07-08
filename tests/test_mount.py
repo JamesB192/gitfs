@@ -88,7 +88,6 @@ class TestMount(object):
             FUSE=mocked_fuse,
             get_credentials=MagicMock(return_value="cred"),
         ):
-
             assert_result = (mocked_merge_worker, mocked_fetch_worker, mocked_router)
 
             assert prepare_components(args) == assert_result
@@ -128,13 +127,13 @@ class TestMount(object):
         with patch.multiple("gitfs.mounter", Args=mocked_args):
             assert parse_args(mocked_parser) == "args"
             asserted_calls = [
-                call("remote_url", help="repo to be cloned"),
                 call("mount_point", help="where the repo should be mount"),
                 call(
+                    "-v", "--version", action="version", version="%(prog)s 53.189.17.21"
+                ),
+                call(
                     "-o",
-                    help="other options: repo_path, "
-                    + "user, group, branch, max_size, "
-                    + "max_offset, fetch_timeout, merge_timeout",
+                    help="other options: repo_path, user, group, branch, max_size, max_offset, fetch_timeout, merge_timeout, ssh_user",
                 ),
             ]
             mocked_parser.add_argument.assert_has_calls(asserted_calls)

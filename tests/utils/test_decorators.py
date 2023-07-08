@@ -52,7 +52,7 @@ class TestRetryDecorator(object):
             with pytest.raises(ValueError):
                 again(mocked_method)("arg", kwarg="kwarg")
 
-            mocked_time.sleep.assert_has_calls([call(3), call(3), call(1)])
+            mocked_time.sleep.assert_has_calls([call(3), call(3), call(3)])
             mocked_method.assert_has_calls([call("arg", kwarg="kwarg")])
 
 

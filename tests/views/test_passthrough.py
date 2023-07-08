@@ -255,7 +255,7 @@ class TestPassthrough(object):
             assert result == "magic"
             old = "/the/root/path/magic/path"
             new = "/the/root/path/magic/new"
-            mocked_rename.assert_has_calls([call(old), call(new)])
+            mocked_rename.assert_has_calls([call(old, new)])
 
     def test_link(self):
         mocked_link = MagicMock()
