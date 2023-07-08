@@ -3,7 +3,7 @@ BUILD_DIR:=build
 VIRTUAL_ENV?=$(BUILD_DIR)/virtualenv
 
 TESTS?=tests
-PYTHON?=3.7
+PYTHON?=3.10
 TEST_DIR:=/tmp/gitfs-tests
 MNT_DIR:=$(TEST_DIR)/$(shell bash -c 'echo $$RANDOM')_mnt
 REPO_DIR:=$(TEST_DIR)/$(shell bash -c 'echo $$RANDOM')_repo
@@ -39,8 +39,8 @@ $(BUILD_DIR):
 $(VIRTUAL_ENV)/bin/py.test: $(VIRTUAL_ENV)/bin/pip$(PYTHON)
 	@touch $@
 
-$(VIRTUAL_ENV)/bin/pip2.7:
-	virtualenv --setuptools $(VIRTUAL_ENV)
+$(VIRTUAL_ENV)/bin/pip$(PYTHON):
+	virtualenv $(VIRTUAL_ENV)
 
 $(VIRTUAL_ENV)/bin/pip%:
 	virtualenv --setuptools $(VIRTUAL_ENV) -ppython$*
